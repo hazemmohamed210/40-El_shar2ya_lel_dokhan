@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class CartRepository extends MainRepository<Cart> {
 
     public static List<Cart> carts = new ArrayList<>();
-    @Value("spring.application.cartDataPath")
+    @Value("${spring.application.cartDataPath}")
     private String dataPath;
 
     @Override
