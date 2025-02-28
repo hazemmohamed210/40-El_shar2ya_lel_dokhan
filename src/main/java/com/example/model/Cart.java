@@ -1,5 +1,8 @@
 package com.example.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -7,6 +10,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart {
     private UUID id;
     private UUID userId;
