@@ -38,12 +38,12 @@ public class CartRepository extends MainRepository<Cart> {
     }
 
     public Cart getCartById(UUID cartId){
-        List<Cart> filtered = findAll().stream().filter(cart -> cart.getId().equals(cartId)).collect(Collectors.toList());
+        List<Cart> filtered = findAll().stream().filter(cart -> cart.getId().equals(cartId)).toList();
         return (filtered.size() > 0)? filtered.get(0) : null;
     }
 
     public Cart getCartByUserId(UUID userId){
-        List<Cart> filtered = findAll().stream().filter(cart -> cart.getUserId().equals(userId)).collect(Collectors.toList());
+        List<Cart> filtered = findAll().stream().filter(cart -> cart.getUserId().equals(userId)).toList();
         return (filtered.size() > 0)? filtered.get(0) : null;
     }
 
