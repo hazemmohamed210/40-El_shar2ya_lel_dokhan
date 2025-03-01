@@ -38,11 +38,12 @@
 //        Cart cart = new Cart(UUID.randomUUID(), UUID.randomUUID(), new ArrayList<>());
 //
 //        cartService.addCart(cart);
+//        Cart existing = cartService.addCart(cart);
 //
-//        assertNull(cartService.addCart(cart));
+//        assertNull(existing);
 //    }
 //    @Test
-//    public void addCart_withNoCartId_shouldReturnException() {
+//    public void addCart_withNoCart_shouldReturnException() {
 //        assertThrows(IllegalArgumentException.class, () -> cartService.addCart(null));
 //    }
 //

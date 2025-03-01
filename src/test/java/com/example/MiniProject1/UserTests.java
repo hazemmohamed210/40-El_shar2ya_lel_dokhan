@@ -39,11 +39,12 @@
 //        User user = new User(UUID.randomUUID(), "Dummy User", new ArrayList<>());
 //
 //        userService.addUser(user);
+//        User existing = userService.addUser(user);
 //
-//        assertNull(userService.addUser(user));
+//        assertNull(existing);
 //    }
 //    @Test
-//    public void addUser_withNoId_shouldReturnException() {
+//    public void addUser_withNoUser_shouldReturnException() {
 //        assertThrows(IllegalArgumentException.class, () -> userService.addUser(null));
 //    }
 //
