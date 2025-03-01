@@ -1,6 +1,7 @@
 //package com.example.MiniProject1;
 //
 //import com.example.model.Cart;
+//import com.example.model.Product;
 //import com.example.service.CartService;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -170,7 +171,7 @@
 //    }
 //
 //    @Test
-//    public void deleteCartById_withValidInput_shouldReturnDeletedCart() {
+//    public void deleteCartById_withValidInput_shouldReturnNull() {
 //        Cart cart = new Cart(UUID.randomUUID(), UUID.randomUUID(), new ArrayList<>());
 //        cartService.addCart(cart);
 //
