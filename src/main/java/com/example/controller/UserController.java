@@ -1,7 +1,10 @@
 package com.example.controller;
 
+import com.example.model.Cart;
+import com.example.model.Product;
 import com.example.model.User;
 import com.example.model.Order;
+import com.example.service.CartService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +18,14 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final CartService cartService;
+//    private ProductService productService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CartService cartService) {
         this.userService = userService;
+        this.cartService = cartService;
+//        this.productService = productService;
     }
 
     @PostMapping("/")
@@ -47,12 +54,56 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/removeOrder")
-    public void removeOrderFromUser(@PathVariable UUID userId, @RequestBody Order order) {
-        userService.removeOrderFromUser(userId, order);
+    public String removeOrderFromUser(@PathVariable UUID userId, @RequestBody Order order) {
+        try {
+            userService.removeOrderFromUser(userId, order);
+            return "success";
+        } catch (Exception e){
+            return "failed";
+        }
     }
 
+    @DeleteMapping("/{userId}/emptyCart")
+    public String emptyCart(@PathVariable UUID userId){
+        try {
+            userService.emptyCart(userId);
+            return "success";
+        } catch (Exception e){
+            return "failed";
+        }
+    }
+
+//    @PutMapping("/addProductToCart")
+//    public String addProductToCart(@RequestParam UUID userId, @RequestParam UUID productId){
+//        try {
+//            Cart cart = cartService.getCartByUserId(userId);
+//            Product product = productService.getProductById(productId);
+//            cartService.addProductToCart(cart.getId(), product);
+//            return "success";
+//        } catch (Exception e){
+//            return "failed";
+//        }
+//    }
+//
+//    @PutMapping("/deleteProductFromCart")
+//    public String deleteProductFromCart(@RequestParam UUID userId, @RequestParam UUID productId){
+//        try {
+//            Cart cart = cartService.getCartByUserId(userId);
+//            Product product = productService.getProductById(productId);
+//            cartService.deleteProductFromCart(cart.getId(), product);
+//            return "success";
+//        } catch (Exception e){
+//            return "failed";
+//        }
+//    }
+
     @DeleteMapping("/delete/{userId}")
-    public void deleteUserById(@PathVariable UUID userId) {
-        userService.deleteUserById(userId);
+    public String deleteUserById(@PathVariable UUID userId) {
+        try {
+            userService.deleteUserById(userId);
+            return "success";
+        } catch (Exception e){
+            return "failed";
+        }
     }
 }

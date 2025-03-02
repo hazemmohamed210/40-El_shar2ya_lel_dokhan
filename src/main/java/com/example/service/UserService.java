@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.model.Cart;
 import com.example.model.User;
 import com.example.model.Order;
 import com.example.repository.UserRepository;
@@ -41,6 +42,12 @@ public class UserService {
 
     public void addOrderToUser(UUID userId, Order order) {
         userRepository.addOrderToUser(userId, order);
+    }
+
+    public void emptyCart(UUID userId){
+        Cart cart = cartRepository.getCartByUserId(userId);
+        cart.setProducts(new ArrayList<>());
+        cartRepository.save(cart);
     }
 
     public void removeOrderFromUser(UUID userId, Order order) {
