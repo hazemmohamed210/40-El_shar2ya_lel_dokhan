@@ -1,9 +1,8 @@
 package com.example.repository;
 
-import com.example.model.Cart;
+import com.example.model.Order;
 import com.example.model.User;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import java.util.UUID;
 public class UserRepository extends MainRepository<User> {
     @Value("${spring.application.userDataPath}")
     private String userDataPath;
+
     @Override
     protected String getDataPath() {
         return userDataPath;
@@ -27,19 +27,23 @@ public class UserRepository extends MainRepository<User> {
     public ArrayList<User> getUsers() {
         return findAll();
     }
+
     public User getUserById(UUID userId) {
         return getUsers().stream().filter(user -> user.getId().equals(userId)).findFirst().orElse(null);
     }
+
     public User addUser(User user) {
         ArrayList<User> users = getUsers();
         users.add(user);
         save(user);
         return user;
     }
+
     public List<Order> getOrdersByUserId(UUID userId){
         User user = getUserById(userId);
         return (user != null) ?user.getOrders():new ArrayList<>();
     }
+
     public void addOrderToUser(UUID userId, Order order){
         User user = getUserById(userId);
         if(user != null){
@@ -47,17 +51,19 @@ public class UserRepository extends MainRepository<User> {
             save(user);
         }
     }
+
     public void removeOrderFromUser(UUID userId, Order order){
         User user = getUserById(userId);
         if(user != null){
-            user.getOrders().removeIf(order -> order.getId().equals(orderId));
+            user.getOrders().removeIf(o -> o.getId().equals(order.getId()));
             save(user);
         }
     }
+
     public void deleteUserById(UUID userId){
         ArrayList<User> users = getUsers();
         users.removeIf(user -> user.getId().equals(userId));
-        save(users);
+        saveAll(users);
     }
 
 }
