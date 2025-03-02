@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Repository
 public class UserRepository extends MainRepository<User> {
+
     @Value("${spring.application.userDataPath}")
     private String userDataPath;
 
@@ -33,15 +34,13 @@ public class UserRepository extends MainRepository<User> {
     }
 
     public User addUser(User user) {
-        ArrayList<User> users = getUsers();
-        users.add(user);
         save(user);
         return user;
     }
 
     public List<Order> getOrdersByUserId(UUID userId){
         User user = getUserById(userId);
-        return (user != null) ?user.getOrders():new ArrayList<>();
+        return (user != null)? user.getOrders():new ArrayList<>();
     }
 
     public void addOrderToUser(UUID userId, Order order){
