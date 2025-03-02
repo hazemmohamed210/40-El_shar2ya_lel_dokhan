@@ -21,6 +21,10 @@ public class CartService extends MainService<Cart>{
     }
 
     public Cart addCart(Cart cart){
+        if(cart == null) throw new IllegalArgumentException();
+
+        if(getCartById(cart.getId()) != null) return null;
+
         return cartRepository.addCart(cart);
     }
 
@@ -29,22 +33,32 @@ public class CartService extends MainService<Cart>{
     }
 
     public Cart getCartById(UUID cartId){
+        if(cartId == null) throw new IllegalArgumentException();
+
         return cartRepository.getCartById(cartId);
     }
 
     public Cart getCartByUserId(UUID userId){
+        if(userId == null) throw new IllegalArgumentException();
+
         return cartRepository.getCartByUserId(userId);
     }
 
     public void addProductToCart(UUID cartId, Product product){
+        if(product == null) throw new IllegalArgumentException();
+
         cartRepository.addProductToCart(cartId, product);
     }
 
     public void deleteProductFromCart(UUID cartId, Product product){
+        if(product == null || getCartById(cartId) == null) throw new IllegalArgumentException();
+
         cartRepository.deleteProductFromCart(cartId, product);
     }
 
     public void deleteCartById(UUID cartId){
+        if(cartId == null || getCartById(cartId) == null) throw new IllegalArgumentException();
+
         cartRepository.deleteCartById(cartId);
     }
 }
