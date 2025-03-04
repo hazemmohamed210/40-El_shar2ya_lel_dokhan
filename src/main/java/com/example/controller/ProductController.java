@@ -37,8 +37,8 @@ public class ProductController {
 
     @PutMapping("/update/{productId}")
     public Product updateProduct(@PathVariable UUID productId, @RequestBody Map<String, Object> body) {
-        String newName = (String) body.get("name");
-        double newPrice = ((Number) body.get("price")).doubleValue();
+        String newName = (String) body.get("newName");
+        double newPrice = ((Number) body.get("newPrice")).doubleValue();
         return productService.updateProduct(productId, newName, newPrice);
     }
 
@@ -48,7 +48,7 @@ public class ProductController {
             productService.applyDiscount(discount, productIds);
         }catch (Exception e){
             e.printStackTrace();
-            return "failled to update discount";
+            return "failed to update discount";
         }
         return "Discount applied successfully";
     }
@@ -60,7 +60,7 @@ public class ProductController {
             productService.deleteProductById(productId);
         }catch (Exception e){
             e.printStackTrace();
-            return "failled to delete product";
+            return "failed to delete product";
         }
         return "Product deleted successfully";
     }
