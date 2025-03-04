@@ -40,8 +40,8 @@ public class OrderController {
             orderService.deleteOrderById(orderId);
         } catch(Exception e){
             e.printStackTrace();
-            return "failed to deleteOrderByID";
+            return "Order not found";
         }
-        return "success";
+        return "Order deleted successfully";
     }
 }
