@@ -51,10 +51,10 @@ public class UserRepository extends MainRepository<User> {
         }
     }
 
-    public void removeOrderFromUser(UUID userId, Order order){
+    public void removeOrderFromUser(UUID userId, UUID orderId){
         User user = getUserById(userId);
         if(user != null){
-            user.getOrders().removeIf(o -> o.getId().equals(order.getId()));
+            user.getOrders().removeIf(o -> o.getId().equals(orderId));
             save(user);
         }
     }
