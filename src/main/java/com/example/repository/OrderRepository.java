@@ -24,7 +24,7 @@ public class OrderRepository extends MainRepository<Order> {
     protected Class<Order[]> getArrayType() {return Order[].class; }
 
     public void addOrder(Order order){
-        orders.add(order);
+        save(order);
     }
 
     public ArrayList<Order> getOrders(){
@@ -33,7 +33,7 @@ public class OrderRepository extends MainRepository<Order> {
 
     public Order getOrderById(UUID orderId){
         List<Order> filteredOrders = findAll().stream().filter(order -> order.getId().equals(orderId)).toList();
-        return filteredOrders.isEmpty() ? null : filteredOrders.get(0);
+        return (filteredOrders.size() > 0)? filteredOrders.get(0) : null;
     }
 
     public void deleteOrderById(UUID orderId){

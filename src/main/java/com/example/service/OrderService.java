@@ -19,9 +19,15 @@ public class OrderService extends MainService<Order> {
         this.orderRepository = orderRepository;
     }
 
-    public void addOrder(Order order){orderRepository.save(order); }
+    public void addOrder(Order order){
+        if(order == null) throw new IllegalArgumentException();
+        if(getOrderById(order.getId()) != null) return;
+        orderRepository.addOrder(order);
+    }
 
-    public ArrayList<Order> getOrders(){return orderRepository.findAll(); }
+    public ArrayList<Order> getOrders(){
+        return orderRepository.getOrders();
+    }
 
     public Order getOrderById(UUID orderId){return orderRepository.getOrderById(orderId); }
 
