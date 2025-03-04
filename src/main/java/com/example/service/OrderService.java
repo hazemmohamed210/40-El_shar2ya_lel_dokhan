@@ -29,9 +29,15 @@ public class OrderService extends MainService<Order> {
         return orderRepository.getOrders();
     }
 
-    public Order getOrderById(UUID orderId){return orderRepository.getOrderById(orderId); }
+    public Order getOrderById(UUID orderId){
+        if(orderId == null) throw new IllegalArgumentException();
+        return orderRepository.getOrderById(orderId);
+    }
 
-    public void deleteOrderById(UUID orderId) throws IllegalArgumentException{orderRepository.deleteOrderById(orderId); }
+    public void deleteOrderById(UUID orderId){
+        if(orderId == null || getOrderById(orderId) == null) throw new IllegalArgumentException();
+        orderRepository.deleteOrderById(orderId);
+    }
 
 
 }
