@@ -8,6 +8,7 @@
 //import org.springframework.boot.test.context.SpringBootTest;
 //
 //import java.util.ArrayList;
+//import java.util.List;
 //import java.util.UUID;
 //
 //import static org.junit.jupiter.api.Assertions.*;
@@ -101,7 +102,7 @@
 //        user.getOrders().add(order);
 //        userService.addUser(user);
 //
-//        ArrayList<Order> orders = userService.getOrdersByUserId(user.getId());
+//        List<Order> orders = userService.getOrdersByUserId(user.getId());
 //
 //        assertTrue(orders.contains(order));
 //    }
@@ -147,8 +148,8 @@
 //        User user = new User(UUID.randomUUID(), "Dummy User", new ArrayList<>());
 //        userService.addUser(user);
 //
-//        userService.emptyCart(user);
-//        ArrayList<Order> orders = userService.getOrdersByUserId(user.getId());
+//        userService.emptyCart(user.getId());
+//        List<Order> orders = userService.getOrdersByUserId(user.getId());
 //
 //        assertTrue(orders.isEmpty());
 //    }
@@ -157,7 +158,7 @@
 //        UUID randomId = UUID.randomUUID();
 //
 //         userService.emptyCart(randomId);
-//         ArrayList<Order> orders = userService.getOrdersByUserId(randomId);
+//         List<Order> orders = userService.getOrdersByUserId(randomId);
 //
 //        assertNull(orders);
 //    }
@@ -174,7 +175,7 @@
 //        userService.addUser(user);
 //
 //        userService.removeOrderFromUser(user.getId(), order.getId());
-//        ArrayList<Order> orders = userService.getOrdersByUserId(user.getId());
+//        List<Order> orders = userService.getOrdersByUserId(user.getId());
 //
 //        assertFalse(orders.contains(order));
 //    }
