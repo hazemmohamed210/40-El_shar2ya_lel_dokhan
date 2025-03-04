@@ -115,8 +115,11 @@ public class ProductTests {
         assertNull(updated);
     }
     @Test
-    public void updateProduct_withNoProduct_shouldReturnException() {
-        assertThrows(IllegalArgumentException.class, () -> productService.updateProduct(null, "Updated", 82.6));
+    public void updateProduct_withNoName_shouldReturnException() {
+        Product product = new Product(UUID.randomUUID(), "Dummy Product", 150.3);
+        productService.addProduct(product);
+
+        assertThrows(IllegalArgumentException.class, () -> productService.updateProduct(product.getId(), null, 82.6));
     }
 
     @Test
@@ -143,16 +146,13 @@ public class ProductTests {
         assertNull(product);
     }
     @Test
-    public void applyDiscount_withInvalidDiscount_shouldReturnSamePrice() {
+    public void applyDiscount_withInvalidDiscount_shouldReturnException() {
         Product product = new Product(UUID.randomUUID(), "Dummy Product", 150.3);
         productService.addProduct(product);
         ArrayList<UUID> productIds = new ArrayList<>();
         productIds.add(product.getId());
 
-        productService.applyDiscount(-10.0, productIds);
-        Product updated = productService.getProductById(product.getId());
-
-        assertEquals(product.getPrice(), updated.getPrice());
+        assertThrows(IllegalArgumentException.class, () -> productService.applyDiscount(-10.0, productIds));
     }
 
     @Test
