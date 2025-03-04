@@ -49,14 +49,14 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/checkout")
-    public void addOrderToUser(@PathVariable UUID userId, @RequestBody Order order) {
-        userService.addOrderToUser(userId, order);
+    public void addOrderToUser(@PathVariable UUID userId) {
+        userService.addOrderToUser(userId);
     }
 
     @PostMapping("/{userId}/removeOrder")
-    public String removeOrderFromUser(@PathVariable UUID userId, @RequestBody Order order) {
+    public String removeOrderFromUser(@PathVariable UUID userId, @RequestParam UUID orderId) {
         try {
-            userService.removeOrderFromUser(userId, order);
+            userService.removeOrderFromUser(userId, orderId);
             return "success";
         } catch (Exception e){
             return "failed";
