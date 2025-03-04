@@ -12,17 +12,18 @@ import java.util.stream.Collectors;
 @SuppressWarnings("rawtypes")
 public class ProductRepository extends MainRepository<Product> {
 
+    public static List<Product> products = new ArrayList<>();
     @Value("${spring.application.productDataPath}")
     private String dataPath;
 
     @Override
     protected String getDataPath() {
-        return "";
+        return dataPath;
     }
 
     @Override
     protected Class<Product[]> getArrayType() {
-        return null;
+        return Product[].class;
     }
 
     public Product addProduct(Product product) {
