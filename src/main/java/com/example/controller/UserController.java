@@ -20,10 +20,10 @@ public class UserController {
 
     private final UserService userService;
     private final CartService cartService;
-    private ProductService productService;
+    private final ProductService productService;
 
     @Autowired
-    public UserController(UserService userService, CartService cartService) {
+    public UserController(UserService userService, CartService cartService, ProductService productService) {
         this.userService = userService;
         this.cartService = cartService;
         this.productService = productService;
@@ -83,28 +83,29 @@ public class UserController {
     public String addProductToCart(@RequestParam UUID userId, @RequestParam UUID productId) {
         Cart cart = cartService.getCartByUserId(userId);
         if (cart == null) {
-            return "Cart not found";
+            cart = new Cart(UUID.randomUUID(), userId, new ArrayList<>());
+            cartService.addCart(cart);
         }
         Product product = productService.getProductById(productId);
         if (product == null) {
             return "Product not found";
         }
         cartService.addProductToCart(cart.getId(), product);
-        return "Success";
+        return "Product added to cart";
     }
 
     @PutMapping("/deleteProductFromCart")
     public String deleteProductFromCart(@RequestParam UUID userId, @RequestParam UUID productId) {
         Cart cart = cartService.getCartByUserId(userId);
         if (cart == null) {
-            return "Cart not found";
+            return "Cart is empty";
         }
         Product product = productService.getProductById(productId);
         if (product == null) {
             return "Product not found";
         }
         cartService.deleteProductFromCart(cart.getId(), product);
-        return "Success";
+        return "Product deleted from cart";
     }
 
     @DeleteMapping("/delete/{userId}")
