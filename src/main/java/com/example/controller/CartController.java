@@ -41,10 +41,10 @@ public class CartController {
             cartService.addProductToCart(cartId, product);
         } catch (Exception e){
             e.printStackTrace();
-            return "failed to addProductToCart";
+            return "Cart not found";
         }
 
-        return "success";
+        return "Cart added successfully";
     }
 
     @DeleteMapping("/delete/{cartId}")
@@ -53,10 +53,10 @@ public class CartController {
             cartService.deleteCartById(cartId);
         } catch (Exception e){
             e.printStackTrace();
-            return "failed to deleteCartById";
+            return "Cart not found";
         }
 
-        return "success";
+        return "Cart deleted successfully";
     }
 
 

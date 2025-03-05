@@ -60,7 +60,7 @@ public class ProductController {
             productService.deleteProductById(productId);
         }catch (Exception e){
             e.printStackTrace();
-            return "failed to delete product";
+            return "Product not found";
         }
         return "Product deleted successfully";
     }

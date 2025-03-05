@@ -1,8 +1,11 @@
 package com.example.MiniProject1;
 
+import com.example.model.Cart;
+import com.example.model.Product;
 import com.example.model.User;
 import com.example.model.Order;
 import com.example.repository.UserRepository;
+import com.example.service.CartService;
 import com.example.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserTests {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CartService cartService;
 
     @Autowired
     private UserRepository userRepository;
@@ -112,12 +118,10 @@ public class UserTests {
         assertTrue(orders.contains(order));
     }
     @Test
-    public void getOrdersByUserId_withInvalidId_shouldReturnNull() {
+    public void getOrdersByUserId_withInvalidId_shouldReturnException() {
         UUID randomId = UUID.randomUUID();
 
-        List<Order> orders = userService.getOrdersByUserId(randomId);
-
-        assertNull(orders);
+        assertThrows(IllegalArgumentException.class, () -> userService.getOrdersByUserId(randomId));
     }
     @Test
     public void getOrdersByUserId_withNoId_shouldReturnException() {
@@ -125,16 +129,17 @@ public class UserTests {
     }
 
     @Test
-    public void addOrderToUser_withValidInput_shouldReturnOrder() {
+    public void addOrderToUser_withValidInput_shouldReturnOrderSize() {
         User user = new User(UUID.randomUUID(), "Dummy User", new ArrayList<>());
         userService.addUser(user);
-        Order order = new Order(UUID.randomUUID(), UUID.randomUUID(), 74.9, new ArrayList<>());
-        user.getOrders().add(order);
+        Cart cart = new Cart(UUID.randomUUID(), user.getId(), new ArrayList<>());
+        cart.getProducts().add(new Product(UUID.randomUUID(), "Dummy Product", 150.3));
+        cartService.addCart(cart);
 
         userService.addOrderToUser(user.getId());
         User updated = userService.getUserById(user.getId());
 
-        assertTrue(updated.getOrders().contains(order));
+        assertEquals(1, updated.getOrders().size());
     }
     @Test
     public void addOrderToUser_withInvalidId_shouldReturnException() {
@@ -152,6 +157,9 @@ public class UserTests {
     public void emptyCart_withValidInput_shouldReturnTrue() {
         User user = new User(UUID.randomUUID(), "Dummy User", new ArrayList<>());
         userService.addUser(user);
+        Cart cart = new Cart(UUID.randomUUID(), user.getId(), new ArrayList<>());
+        cart.getProducts().add(new Product(UUID.randomUUID(), "Dummy Product", 150.3));
+        cartService.addCart(cart);
 
         userService.emptyCart(user.getId());
         List<Order> orders = userService.getOrdersByUserId(user.getId());
@@ -159,13 +167,10 @@ public class UserTests {
         assertTrue(orders.isEmpty());
     }
     @Test
-    public void emptyCart_withInvalidId_shouldReturnNull() {
+    public void emptyCart_withInvalidId_shouldReturnException() {
         UUID randomId = UUID.randomUUID();
 
-         userService.emptyCart(randomId);
-         List<Order> orders = userService.getOrdersByUserId(randomId);
-
-        assertNull(orders);
+        assertThrows(IllegalArgumentException.class, () -> userService.emptyCart(randomId));
     }
     @Test
     public void emptyCart_withNoId_shouldReturnException() {

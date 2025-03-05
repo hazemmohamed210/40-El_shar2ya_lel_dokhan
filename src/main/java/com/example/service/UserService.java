@@ -28,6 +28,10 @@ public class UserService {
     }
 
     public User addUser(User user) {
+        if(user == null) throw new IllegalArgumentException();
+
+        if(getUserById(user.getId()) != null) return null;
+
         return userRepository.addUser(user);
     }
 
@@ -36,17 +40,23 @@ public class UserService {
     }
 
     public User getUserById(UUID userId) {
+        if(userId == null) throw new IllegalArgumentException();
+
         return userRepository.getUserById(userId);
     }
 
     public List<Order> getOrdersByUserId(UUID userId) {
+        if(userId == null || getUserById(userId) == null) throw new IllegalArgumentException();
+
         return userRepository.getOrdersByUserId(userId);
     }
 
     public void addOrderToUser(UUID userId) {
+        if(userId == null || getUserById(userId) == null) throw new IllegalArgumentException();
+
         Cart cart = cartService.getCartByUserId(userId);
         if (cart == null || cart.getProducts().isEmpty()) {
-            throw new IllegalStateException("Cart is empty or does not exist");
+            throw new IllegalStateException();
         }
 
         double totalPrice = cart.getProducts().stream().mapToDouble(Product::getPrice).sum();
@@ -63,16 +73,22 @@ public class UserService {
     }
 
     public void emptyCart(UUID userId){
+        if(userId == null || getUserById(userId) == null) throw new IllegalArgumentException();
+
         Cart cart = cartRepository.getCartByUserId(userId);
         cart.setProducts(new ArrayList<>());
         cartRepository.save(cart);
     }
 
     public void removeOrderFromUser(UUID userId, UUID orderId) {
+        if(userId == null || orderId == null) throw new IllegalArgumentException();
+
         userRepository.removeOrderFromUser(userId, orderId);
     }
 
     public void deleteUserById(UUID userId) {
+        if(userId == null || getUserById(userId) == null) throw new IllegalArgumentException();
+
         userRepository.deleteUserById(userId);
     }
 }

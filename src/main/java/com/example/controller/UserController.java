@@ -49,17 +49,22 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/checkout")
-    public void addOrderToUser(@PathVariable UUID userId) {
-        userService.addOrderToUser(userId);
+    public String addOrderToUser(@PathVariable UUID userId) {
+        try {
+            userService.addOrderToUser(userId);
+            return "Order added successfully";
+        } catch (Exception e) {
+            return "User not found";
+        }
     }
 
     @PostMapping("/{userId}/removeOrder")
     public String removeOrderFromUser(@PathVariable UUID userId, @RequestParam UUID orderId) {
         try {
             userService.removeOrderFromUser(userId, orderId);
-            return "success";
+            return "Order removed successfully";
         } catch (Exception e){
-            return "failed";
+            return "User not found";
         }
     }
 
@@ -67,9 +72,9 @@ public class UserController {
     public String emptyCart(@PathVariable UUID userId){
         try {
             userService.emptyCart(userId);
-            return "success";
+            return "Cart emptied successfully";
         } catch (Exception e){
-            return "failed";
+            return "User not found";
         }
     }
 
@@ -101,9 +106,9 @@ public class UserController {
     public String deleteUserById(@PathVariable UUID userId) {
         try {
             userService.deleteUserById(userId);
-            return "success";
+            return "User deleted successfully";
         } catch (Exception e){
-            return "failed";
+            return "User not found";
         }
     }
 }

@@ -10,12 +10,15 @@ import java.util.ArrayList;
 
 @Component
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class User {
     private UUID id;
     private String name;
     private List<Order> orders;
+
+    public User() {
+        this.orders = new ArrayList<>();
+    }
 
     public User(String name, List<Order> orders) {
         this.name = name;
