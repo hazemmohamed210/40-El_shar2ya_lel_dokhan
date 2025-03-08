@@ -18,13 +18,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // Add a new product
     @PostMapping("/")
     public Product addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
     }
 
-    // Get all products
     @GetMapping("/")
     public ArrayList<Product> getProducts() {
         return productService.getProducts();
@@ -53,7 +51,6 @@ public class ProductController {
         return "Discount applied successfully";
     }
 
-    // Delete a product by ID
     @DeleteMapping("/delete/{productId}")
     public String deleteProductById(@PathVariable UUID productId) {
         try {
