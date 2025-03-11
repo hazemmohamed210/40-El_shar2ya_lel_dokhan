@@ -1,6 +1,9 @@
 FROM openjdk:25-ea-4-jdk-oraclelinux9
+
 WORKDIR /app
+
 COPY /target /target
+COPY src/main/java/com/example/data /data
 
 ENV SPRING_APPLICATION_PRODUCTDATAPATH '/data/products.json'
 ENV SPRING_APPLICATION_ORDERDATAPATH '/data/orders.json'
